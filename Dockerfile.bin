@@ -1,0 +1,7 @@
+FROM alpine:edge
+RUN apk --no-cache add ca-certificates
+ADD ./bin/replay-spreadsheet /root/replay-spreadsheet
+ADD ./cmd/replay-spreadsheet/credentials.json ./cmd/replay-spreadsheet/token.json /root/
+WORKDIR /root/
+CMD ["/root/replay-spreadsheet"]
+

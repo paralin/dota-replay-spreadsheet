@@ -1,0 +1,28 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: replay-spreadsheet
+  namespace: replay
+  labels:
+    app: replay-spreadsheet
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: replay-spreadsheet
+    spec:
+      containers:
+      - args:
+        - /root/replay-spreadsheet
+        - daemon
+        env:
+        - name: MONGO_URL
+          value: "mongodb://mongo.replay.svc.cluster.local/replay?replicaSet=rs0"
+        name: replay-spreadsheet
+        image: paralin/replay-spreadsheet:latest
+        imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+
